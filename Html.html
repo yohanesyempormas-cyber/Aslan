@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agen Fast Pay - Top Up Free Fire</title>
+    <style>
+        /* CSS SEDERHANA UNTUK TAMPILAN */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #2d2d2d;
+            width: 90%;
+            max-width: 450px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 165, 0, 0.3);
+            border: 1px solid #ff9900;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #ff9900;
+            margin: 0;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #ff9900;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background-color: #3d3d3d;
+            color: white;
+            box-sizing: border-box; /* Agar padding tidak merusak lebar */
+            font-size: 16px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #ff9900;
+        }
+
+        .price-box {
+            background-color: #3d3d3d;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px dashed #ff9900;
+        }
+
+        .price-text {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .btn-order {
+            width: 100%;
+            padding: 15px;
+            background-color: #25D366; /* Warna WhatsApp */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-order:hover {
+            background-color: #128C7E;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Agen Fast Pay</h1>
+            <p>Top Up Free Fire Aman & Cepat</p>
+        </div>
+
+        <form id="topupForm">
+            <!-- Input ID -->
+            <div class="form-group">
+                <label for="userId">User ID (Player ID)</label>
+                <input type="number" id="userId" placeholder="Contoh: 12345678" required>
+            </div>
+
+            <!-- Input Server -->
+            <div class="form-group">
+                <label for="serverId">Server ID (Zone)</label>
+                <input type="number" id="serverId" placeholder="Contoh: 2001" required>
+                <small style="color: #aaa; font-size: 11px;">*Cek di profil game Anda</small>
+            </div>
+
+            <!-- Pilih Nominal -->
+            <div class="form-group">
+                <label for="diamonds">Pilih Nominal Diamond</label>
+                <select id="diamonds" onchange="updatePrice()" required>
+                    <option value="" disabled selected>-- Pilih --</option>
+                    <option value="100">100 Diamonds - Rp 20.000</option>
+                    <option value="140">140 Diamonds - Rp 25.000</option>
+                    <option value="160">160 Diamonds - Rp 30.000</option>
+                    <option value="200">200 Diamonds - Rp 35.000</option>
+                    <option value="250">250 Diamonds - Rp 40.000</option>
+                    <option value="300">300 Diamonds - Rp 50.000</option>
+                    <option value="400">400 Diamonds - Rp 60.000</option>
+                    <option value="475">475 Diamonds - Rp 70.000</option>
+                    <option value="565">565 Diamonds - Rp 80.000</option>
+                    <option value="645">645 Diamonds - Rp 90.000</option>
+                    <option value="720">720 Diamonds - Rp 100.000</option>
+                </select>
+            </div>
+
+            <!-- Ringkasan Harga -->
+            <div class="price-box">
+                <div>Total Pembayaran:</div>
+                <div class="price-text" id="totalPrice">Rp 0</div>
+                <small style="color: #aaa;">Metode: Transfer / Cash</small>
+            </div>
+
+            <button type="button" class="btn-order" onclick="kirimKeWhatsApp()">Beli Sekarang</button>
+        </form>
+
+        <div class="footer">
+            &copy; 2026 Agen Fast Pay. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        // --- KONFIGURASI NOMOR WA ANDA ---
+        // Ganti angka di bawah ini dengan nomor WA Anda (Gunakan kode negara 62, jangan pakai 0 atau +)
+        const nomorAgen = "08134850089"; 
+
+        // Daftar Harga (Sesuaikan dengan harga beli Anda)
+        const hargaDiamonds = {
+            "100": 20000,
+            "140": 25000,
+            "160": 30000,
+            "200": 35000,
+            "250": 40000
+            "300": 50000,
+            "400": 60000,
+            "475": 70000,
+            "565": 80000,
+            "645": 90000,
+            "720": 100000,
+        };
+
+        function updatePrice() {
+            const select = document.getElementById("diamonds");
+            const selectedValue = select.value;
+            const priceDisplay = document.getElementById("totalPrice");
+
+            if (hargaDiamonds[selectedValue]) {
+                // Format angka ke Rupiah
+                priceDisplay.innerText = "Rp " + hargaDiamonds[selectedValue].toLocaleString('id-ID');
+            } else {
+                priceDisplay.innerText = "Rp 0";
+            }
+        }
+
+        function kirimKeWhatsApp() {
+            const userId = document.getElementById("userId").value;
+            const serverId = document.getElementById("serverId").value;
+            const diamondSelect = document.getElementById("diamonds");
+            const diamondName = diamondSelect.options[diamondSelect.selectedIndex].text;
+            const price = document.getElementById("totalPrice").innerText;
+
+            // Validasi Input
+            if (userId === "" || serverId === "" || diamondSelect.value === "") {
+                alert("Mohon lengkapi semua data!");
+                return;
+            }
+
+            // Membuat Pesan WhatsApp
+            const pesan = `Halo Agen Fast Pay, saya mau Top Up Free Fire:%0A%0A` +
+                          `🆔 *ID:* ${userId}%0A` +
+                          `🌍 *Server:* ${serverId}%0A` +
+                          `💎 *Item:* ${diamondName}%0A` +
+                          `💰 *Harga:* ${price}%0A%0A` +
+                          `Mohon diproses ya, saya akan transfer cash.`;
+
+            // Membuka WhatsApp
+            const url = `https://wa.me/${08134850089}?text=${pesan}`;
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
